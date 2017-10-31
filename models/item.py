@@ -1,5 +1,7 @@
 import sqlite3
-from db import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class ItemModel(db.Model):
     __tablename__ = 'items'
@@ -16,7 +18,7 @@ class ItemModel(db.Model):
 
     @classmethod
     def find_by_name(cls, name):
-        return ItemModel.query.filter_by(name=name)
+        return cls.query.filter_by(name=name).first()
     
     def save_to_db(self):
         db.session.add(self)
